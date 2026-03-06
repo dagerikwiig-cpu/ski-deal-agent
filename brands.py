@@ -5,7 +5,7 @@ BRANDS = [
 "Helly Hansen",
 "Arc'teryx",
 "Patagonia",
-"Haglöfs"
+"Haglöfs",
 "Tenson"
   
 ]
