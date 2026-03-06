@@ -1,0 +1,38 @@
+name: Test Email
+
+on:
+  workflow_dispatch:  # gjør at du kan kjøre manuelt
+
+jobs:
+  send-test-email:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: |
+          python3 - <<EOF
+          import smtplib
+          from email.mime.text import MIMEText
+          import os
+
+          sender = os.environ["EMAIL_FROM"]
+          password = os.environ["EMAIL_PASS"]
+          receiver = os.environ["EMAIL_TO"]
+
+          msg = MIMEText("Dette er en test fra SkiDealAgent")
+          msg["Subject"] = "Test e-post"
+          msg["From"] = sender
+          msg["To"] = receiver
+
+          server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+          server.login(sender, password)
+          server.send_message(msg)
+          server.quit()
+          print("E-post sendt!")
+          EOF
+        env:
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
