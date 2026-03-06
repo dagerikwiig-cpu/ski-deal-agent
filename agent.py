@@ -7,7 +7,7 @@ import stores
 import smtplib
 from email.mime.text import MIMEText
 
-MIN_DISCOUNT = 35
+MIN_DISCOUNT = 0
 
 results=[]
 
